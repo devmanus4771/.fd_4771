@@ -1,0 +1,36 @@
+// create node project
+
+
+npm init -y
+
+
+// create app.js
+
+const fs = require('fs').promises;  // Using fs.promises API for async file operations
+
+// Function to read a file asynchronously and return the content as a promise
+const readFileAsync = (filePath) => {
+    return fs.readFile(filePath, 'utf8');
+};
+
+// Using async/await to read multiple files asynchronously
+const readFiles = async () => {
+    try {
+        // Read all files asynchronously
+        const file1Content = await readFileAsync('file1.txt');
+        const file2Content = await readFileAsync('file2.txt');
+        const file3Content = await readFileAsync('file3.txt');
+
+        // Output the file contents to the console
+        console.log('File 1 Content:', file1Content);
+        console.log('File 2 Content:', file2Content);
+        console.log('File 3 Content:', file3Content);
+    } catch (error) {
+        console.error('Error reading files:', error);
+    }
+};
+
+// Call the readFiles function
+readFiles();
+
+

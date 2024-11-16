@@ -1,0 +1,78 @@
+mkdir express-product-api
+
+cd express-product-api
+
+npm init -y
+
+npm install express
+
+//server.js
+const express = require('express');
+const app = express();
+
+// Use middleware to parse JSON bodies
+app.use(express.json());
+
+const PORT = 3000;
+
+// In-memory employee data (simulating a database)
+let employees = [
+  { id: 1, name: 'Alice', position: 'Developer', salary: 50000 },
+  { id: 2, name: 'Bob', position: 'Manager', salary: 60000 },
+];
+
+// Create Route (POST) for creating a new employee
+app.post('/employees', (req, res) => {
+  const { name, position, salary } = req.body;
+
+  // Validate request data
+  if (!name || !position || !salary) {
+    return res.status(400).json({ message: 'Employee name, position, and salary are required' });
+  }
+
+  // Generate a new employee ID (auto-increment logic)
+  const newEmployee = {
+    id: employees.length + 1,
+    name,
+    position,
+    salary,
+  };
+
+  // Add the new employee to the "database"
+  employees.push(newEmployee);
+
+  // Respond with the created employee
+  res.status(201).json(newEmployee);
+});
+
+// Update Route (PUT) for updating an existing employee
+app.put('/employees/:id', (req, res) => {
+  const { id } = req.params;
+  const { name, position, salary } = req.body;
+
+  // Find the employee by ID
+  const employee = employees.find((emp) => emp.id === parseInt(id));
+
+  if (!employee) {
+    return res.status(404).json({ message: 'Employee not found' });
+  }
+
+  // Update employee data
+  employee.name = name || employee.name;
+  employee.position = position || employee.position;
+  employee.salary = salary || employee.salary;
+
+  // Respond with the updated employee
+  res.json(employee);
+});
+
+// Start the server
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+});
+
+
+run ---> node server.js
+
+
+

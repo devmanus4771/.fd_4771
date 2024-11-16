@@ -1,0 +1,114 @@
+ng new angular-httpclient-app
+
+cd angular-httpclient-app
+
+//app.module.ts:
+
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http'; // Import HttpClientModule
+import { AppComponent } from './app.component';
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    HttpClientModule // Include HttpClientModule in imports array
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+
+//Step 3: Create a Service to Fetch Data
+
+ng generate service data
+
+//data.service.ts:
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs'; // Import Observable
+import { catchError } from 'rxjs/operators'; // Import catchError for error handling
+
+@Injectable({
+  providedIn: 'root'
+})
+export class DataService {
+
+  private apiUrl = 'https://jsonplaceholder.typicode.com/posts'; // Example API endpoint
+
+  constructor(private http: HttpClient) { }
+
+  // Method to fetch data from the API
+  getData(): Observable<any> {
+    return this.http.get<any>(this.apiUrl) // Send GET request
+      .pipe(
+        catchError(this.handleError) // Handle errors if any
+      );
+  }
+
+  // Error handling method
+  private handleError(error: any): Observable<never> {
+    console.error('An error occurred:', error);
+    throw error;
+  }
+}
+
+
+//app.component.ts:
+
+import { Component, OnInit } from '@angular/core';
+import { DataService } from './data.service'; // Import the DataService
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent implements OnInit {
+  title = 'Angular HttpClient App';
+  posts: any[] = []; // Array to store fetched data
+
+  constructor(private dataService: DataService) { }
+
+  ngOnInit(): void {
+    // Fetch data on component initialization
+    this.dataService.getData().subscribe(
+      (data) => {
+        this.posts = data; // Assign the data to the posts array
+      },
+      (error) => {
+        console.error('Error fetching data', error); // Handle errors
+      }
+    );
+  }
+}
+
+
+//app.component.html:
+<div style="text-align: center;">
+  <h1>{{ title }}</h1>
+
+  <h3>Fetched Posts:</h3>
+
+  <div *ngIf="posts.length > 0; else loading">
+    <ul>
+      <li *ngFor="let post of posts">
+        <h4>{{ post.title }}</h4>
+        <p>{{ post.body }}</p>
+      </li>
+    </ul>
+  </div>
+
+  <ng-template #loading>
+    <p>Loading...</p>
+  </ng-template>
+</div>
+
+
+
+run ----> ng serve
+

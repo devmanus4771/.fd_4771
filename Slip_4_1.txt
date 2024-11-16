@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bank Details</title>
+  <!-- Include AngularJS library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body ng-app="bankApp" ng-controller="bankController">
+
+  <h1>Bank Details</h1>
+
+  <!-- Table to display bank details -->
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Bank Name</th>
+        <th>MICR Code</th>
+        <th>IFSC Code</th>
+        <th>Address</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Using ng-repeat to loop through the banks array -->
+      <tr ng-repeat="bank in banks">
+        <td>{{ bank.name }}</td>
+        <td>{{ bank.micr }}</td>
+        <td>{{ bank.ifsc }}</td>
+        <td>{{ bank.address }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <script>
+    // Define the AngularJS application
+    var app = angular.module('bankApp', []);
+
+    // Define the controller
+    app.controller('bankController', function($scope) {
+      // Sample data (bank details array)
+      $scope.banks = [
+        { name: "Bank of America", micr: "123456789", ifsc: "BOFA1234567", address: "123 Street, New York" },
+        { name: "Chase Bank", micr: "987654321", ifsc: "CHASE9876543", address: "456 Avenue, Los Angeles" },
+        { name: "Wells Fargo", micr: "112233445", ifsc: "WF123456789", address: "789 Boulevard, San Francisco" },
+        { name: "Citibank", micr: "556677889", ifsc: "CITI1234567", address: "101 Road, Chicago" }
+      ];
+    });
+  </script>
+
+</body>
+</html>

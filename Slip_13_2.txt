@@ -1,0 +1,57 @@
+ng new input-display-app
+
+cd input-display-app
+
+//app.component.ts
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  title = 'Input Display App';
+  
+  // Variable to store user input
+  userInput: string = '';
+}
+
+
+
+//app.component.html:
+<div style="text-align: center;">
+  <h1>{{ title }}</h1>
+  
+  <!-- Input field to get user input -->
+  <input type="text" [(ngModel)]="userInput" placeholder="Enter something" />
+  
+  <div *ngIf="userInput">
+    <h3>You entered: {{ userInput }}</h3>
+  </div>
+</div>
+
+
+//app.module.ts:
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms'; // Import FormsModule
+
+import { AppComponent } from './app.component';
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    FormsModule // Add FormsModule here
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+
+
+run ---> ng serve

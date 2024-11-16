@@ -1,0 +1,70 @@
+ng new simple-input-display-app
+
+cd simple-input-display-app
+
+ng generate component input-display
+
+
+//input-display.component.ts:
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-input-display',
+  templateUrl: './input-display.component.html',
+  styleUrls: ['./input-display.component.css']
+})
+export class InputDisplayComponent {
+  // Variable to hold input data
+  userInput: string = '';
+
+  // Method to handle input change
+  onInputChange(event: any): void {
+    this.userInput = event.target.value;
+  }
+}
+
+
+//input-display.component.html:
+<div style="text-align: center;">
+  <h1>Simple Input Display</h1>
+
+  <label for="userInput">Enter something: </label>
+  <input 
+    type="text" 
+    id="userInput" 
+    [(ngModel)]="userInput" 
+    placeholder="Type something..." 
+    (input)="onInputChange($event)" />
+
+  <p>You entered: {{ userInput }}</p>
+</div>
+
+
+//app.module.ts:
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';  // Import FormsModule
+import { AppComponent } from './app.component';
+import { InputDisplayComponent } from './input-display/input-display.component';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    InputDisplayComponent
+  ],
+  imports: [
+    BrowserModule,
+    FormsModule  // Include FormsModule here
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+
+//app.component.html:
+
+<app-input-display></app-input-display>
+
+
+run ----> ng serve

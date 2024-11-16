@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="bankApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Details</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body>
+
+    <div ng-controller="bankController">
+        <h1>Bank Details</h1>
+        
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Bank Name</th>
+                    <th>MICR Code</th>
+                    <th>IFSC Code</th>
+                    <th>Address</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="bank in banks">
+                    <td>{{ bank.name }}</td>
+                    <td>{{ bank.micrCode }}</td>
+                    <td>{{ bank.ifscCode }}</td>
+                    <td>{{ bank.address }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // AngularJS Application
+        var app = angular.module('bankApp', []);
+
+        // Controller for the app
+        app.controller('bankController', function($scope) {
+            // Sample data for bank details
+            $scope.banks = [
+                { name: "State Bank of India", micrCode: "123456", ifscCode: "SBI1234", address: "Mumbai, Maharashtra" },
+                { name: "HDFC Bank", micrCode: "654321", ifscCode: "HDFC5678", address: "Delhi, Delhi" },
+                { name: "ICICI Bank", micrCode: "112233", ifscCode: "ICICI7890", address: "Chennai, Tamil Nadu" },
+                { name: "Axis Bank", micrCode: "998877", ifscCode: "AXIS3344", address: "Kolkata, West Bengal" }
+            ];
+        });
+    </script>
+
+</body>
+</html>

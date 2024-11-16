@@ -1,0 +1,45 @@
+ng new student-filter-app
+
+cd student-filter-app
+
+//app.component.ts:
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  title = 'Student Filter App';
+
+  // Array of students with their names and grades
+  students = [
+    { name: 'John Doe', grade: 90 },
+    { name: 'Jane Smith', grade: 80 },
+    { name: 'Mark Johnson', grade: 85 },
+    { name: 'Emma Brown', grade: 95 },
+    { name: 'Lucas White', grade: 70 }
+  ];
+
+  // Get the names of students who scored 85% or more
+  filteredStudents = this.students
+    .filter(student => student.grade >= 85) // Filter students with grades >= 85
+    .map(student => student.name); // Map to just the names
+}
+
+
+//app.component.html:
+<div style="text-align: center;">
+  <h1>{{ title }}</h1>
+
+  <h3>Students who scored 85% or more:</h3>
+
+  <!-- Display filtered student names -->
+  <ul>
+    <li *ngFor="let student of filteredStudents">{{ student }}</li>
+  </ul>
+</div>
+
+
+run --> ng serve

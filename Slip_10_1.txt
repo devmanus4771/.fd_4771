@@ -1,0 +1,33 @@
+create new project
+
+mkdir simple-node-server
+
+cd simple-node-server
+
+npm init -y
+
+npm install express
+
+// app.js
+
+// Import the Express module
+const express = require('express');
+
+// Create an instance of Express
+const app = express();
+
+// Define a port number for the server to listen on
+const PORT = 3000;
+
+// Set up a basic route
+app.get('/', (req, res) => {
+  res.send('Hello, World!');
+});
+
+// Start the server
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+});
+
+
+for run ---> node app.js

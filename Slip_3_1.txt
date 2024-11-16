@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="gameApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game List</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body>
+
+    <div ng-controller="gameController" ng-init="games=[]">
+        <!-- Display a message using ng-bind -->
+        <h2 ng-bind="message"></h2>
+
+        <!-- Button to load games -->
+        <button ng-click="loadGames()">Click to Load Games</button>
+
+        <!-- Display list of games when button is clicked -->
+        <ul>
+            <li ng-repeat="game in games">
+                {{ game }}
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        // AngularJS Application
+        var app = angular.module('gameApp', []);
+
+        // Controller for the app
+        app.controller('gameController', function($scope) {
+            // Initial message
+            $scope.message = "Click the button to load the list of games";
+
+            // Method to load games on button click
+            $scope.loadGames = function() {
+                // Array of games
+                $scope.games = [
+                    "Football",
+                    "Basketball",
+                    "Cricket",
+                    "Tennis",
+                    "Volleyball",
+                    "Baseball"
+                ];
+                $scope.message = "Here is the list of games!";
+            };
+        });
+    </script>
+
+</body>
+</html>

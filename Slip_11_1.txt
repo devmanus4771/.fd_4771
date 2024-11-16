@@ -1,0 +1,62 @@
+mkdir express-movie-api
+
+cd express-movie-api
+
+npm init -y
+
+npm install express
+
+
+//server.js
+
+const express = require('express');
+const app = express();
+
+// Middleware to parse JSON bodies
+app.use(express.json());
+
+// In-memory "database" to store movies
+let movies = [];
+
+// Create Route (POST) for creating a new movie
+app.post('/movies', (req, res) => {
+  const { title, director, year, genre } = req.body;
+
+  // Validate input data
+  if (!title || !director || !year || !genre) {
+    return res.status(400).json({ message: 'All fields (title, director, year, genre) are required.' });
+  }
+
+  // Create a new movie object
+  const newMovie = {
+    id: movies.length + 1, // Simple auto-increment ID
+    title,
+    director,
+    year,
+    genre
+  };
+
+  // Save the movie in the "database"
+  movies.push(newMovie);
+
+  // Return the newly created movie
+  res.status(201).json({
+    message: 'Movie created successfully',
+    movie: newMovie
+  });
+});
+
+// Read Route (GET) for getting all movies
+app.get('/movies', (req, res) => {
+  // Return all movies in JSON format
+  res.status(200).json(movies);
+});
+
+// Start the server
+const PORT = 3000;
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+});
+
+run --> node server.js
+

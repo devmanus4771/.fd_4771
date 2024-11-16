@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Employee Details</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    table, th, td {
+      border: 1px solid black;
+    }
+    th, td {
+      padding: 10px;
+      text-align: left;
+    }
+  </style>
+</head>
+<body ng-app="employeeApp">
+
+  <div ng-controller="EmployeeController">
+    <h2>Employee Details</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Employee ID</th>
+          <th>Employee Name</th>
+          <th>Pin Code</th>
+          <th>Address</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="employee in employees">
+          <td>{{ employee.id }}</td>
+          <td>{{ employee.name }}</td>
+          <td>{{ employee.pinCode }}</td>
+          <td>{{ employee.address }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    // Define the AngularJS application
+    var app = angular.module('employeeApp', []);
+
+    // Controller to manage employee data
+    app.controller('EmployeeController', function($scope) {
+      // Sample employee data
+      $scope.employees = [
+        { id: 101, name: 'John Doe', pinCode: '123456', address: '123 Elm St, City, Country' },
+        { id: 102, name: 'Jane Smith', pinCode: '654321', address: '456 Oak St, City, Country' },
+        { id: 103, name: 'Sam Wilson', pinCode: '112233', address: '789 Pine St, City, Country' },
+        { id: 104, name: 'Alice Johnson', pinCode: '445566', address: '101 Maple St, City, Country' }
+      ];
+    });
+  </script>
+
+</body>
+</html>

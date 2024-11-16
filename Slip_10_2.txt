@@ -1,0 +1,72 @@
+mkdir express-product-api
+
+cd express-product-api
+
+npm init -y
+
+npm install express
+
+//server.js
+const express = require('express');
+const bodyParser = require('body-parser');
+const { body, validationResult } = require('express-validator');
+
+const app = express();
+const port = 3000;
+
+// Middleware for parsing JSON bodies and form data (URL-encoded)
+app.use(bodyParser.json()); // for parsing application/json
+app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+
+// Serve a simple form at the /send-data GET route
+app.get('/send-data', (req, res) => {
+    res.send(`
+        <form action="/submit" method="POST">
+            <label for="username">Username: </label>
+            <input type="text" id="username" name="username" required>
+            <br>
+            <label for="email">Email: </label>
+            <input type="email" id="email" name="email" required>
+            <br>
+            <label for="age">Age: </label>
+            <input type="number" id="age" name="age" required>
+            <br>
+            <button type="submit">Submit</button>
+        </form>
+    `);
+});
+
+// POST route for submitting data with validation
+app.post('/submit', [
+    // Validation middleware
+    body('username').isAlphanumeric().withMessage('Username must be alphanumeric'),
+    body('email').isEmail().withMessage('Email must be valid'),
+    body('age').isInt({ min: 18 }).withMessage('Age must be at least 18'),
+], (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        // If there are validation errors, send JSON response with errors
+        return res.status(400).json({
+            success: false,
+            errors: errors.array()
+        });
+    }
+
+    // If validation passes, proceed with your logic and send a success JSON response
+    return res.status(200).json({
+        success: true,
+        message: 'Data received and validated successfully!',
+        data: req.body // You can return the validated data here
+    });
+});
+
+// Start the server
+app.listen(port, () => {
+    console.log(`Server is running on http://localhost:${port}`);
+});
+
+
+run ---> node server.js
+
+
+
